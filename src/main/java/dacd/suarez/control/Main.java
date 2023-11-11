@@ -25,6 +25,15 @@ public class Main {
             JsonObject weatherData = gson.fromJson(jsonString, JsonObject.class);
             JsonArray list = weatherData.getAsJsonObject().getAsJsonArray("list");
 
+            JsonObject city = weatherData.getAsJsonObject("city");
+            String cityName = city.get("name").getAsString();
+            JsonObject coordinates = city.getAsJsonObject("coord");
+            double lat = coordinates.get("lat").getAsDouble();
+            double lon = coordinates.get("lon").getAsDouble();
+
+            // Crear la ubicación a partir de los datos extraídos
+            Location location = new Location(cityName, lat, lon);
+
             List<Weather> weatherList = new ArrayList<>();
 
 
@@ -42,12 +51,12 @@ public class Main {
 
 
 
-                Weather weatherObject = new Weather(temp, humidity, cloud, speed, pop, weatherInstant);
+                Weather weatherObject = new Weather(temp, humidity, cloud, speed, pop, weatherInstant, location);
                 weatherList.add(weatherObject);
             }
 
             for (Weather weatherIter : weatherList) {
-                System.out.println("Wind: " + weatherIter.getSpeed() + " m/s" + ", Temperature: " + weatherIter.getTemp() + "º" + ", Humidity: " + weatherIter.getHumidity()
+                System.out.println("City: " + weatherIter.getLocation().getName() + ", Wind: " + weatherIter.getSpeed() + " m/s" + ", Temperature: " + weatherIter.getTemp() + "º" + ", Humidity: " + weatherIter.getHumidity()
                         + "%" + ", Clouds: " + weatherIter.getAll() + ", Precipitation: " + weatherIter.getPop() + "%" + ", Date: " + weatherIter.getDt() );
             }
 
