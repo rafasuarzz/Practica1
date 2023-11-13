@@ -1,11 +1,10 @@
 package dacd.suarez.model;
 
 import java.time.Instant;
-import java.util.ArrayList;
 
 public class Weather {
     private final double temp;
-    private final double humidity;
+    private final int humidity;
     private final int all;
     private final double speed;
     private final double pop;
@@ -13,7 +12,7 @@ public class Weather {
     private final Location location;
 
 
-    public Weather(double temp, double humidity, int all, double speed, double pop, Instant dt, Location location) {
+    public Weather(double temp, int humidity, int all, double speed, double pop, Instant dt, Location location) {
         this.temp = temp;
         this.humidity = humidity;
         this.all = all;
@@ -28,7 +27,7 @@ public class Weather {
         return temp;
     }
 
-    public double getHumidity() {
+    public int getHumidity() {
         return humidity;
     }
 

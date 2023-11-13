@@ -7,9 +7,10 @@ import java.util.List;
 
 public class Main2 {
     public static void main(String[] args) {
+
         // Configuración de proveedor y almacenamiento
         WeatherProvider provider = new OpenWeatherMapProvider("724ea6ff6c24bf793a2f723008965e34", "https://api.openweathermap.org/data/2.5/forecast");
-        WeatherStore store = new SqliteWeatherStore("/Users/rafasuarzz/documentos/weather_data.db");
+        WeatherStore store = new SqliteWeatherStore("/Users/rafasuarzz/weather_data2.db");
 
         // Ubicaciones a obtener datos climáticos
         List<Location> locations = new ArrayList<>();
@@ -30,6 +31,7 @@ public class Main2 {
         locations.add(location6);
         locations.add(location7);
         locations.add(location8);
+
 
         // Configuración de días a obtener datos climáticos
         int days = 5;

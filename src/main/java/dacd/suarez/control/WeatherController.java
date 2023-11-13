@@ -4,6 +4,7 @@ import dacd.suarez.model.Location;
 import dacd.suarez.model.Weather;
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public class WeatherController {
@@ -22,15 +23,17 @@ public class WeatherController {
 
     // Método para ejecutar la obtención de datos climáticos
     public void execute() {
+        Instant now = Instant.now();
+
         for (Location location : locations) {
             for (int i = 0; i < days; i++) {
-                Weather weather = new Weather(0, 0, 0, 0, 0, Instant.now(), location); // Se crea un objeto Weather con valores predeterminados
-                weather = weatherProvider.getWeather(location, weather); // Obtiene datos climáticos utilizando el proveedor
+                Instant currentTime = now.plus(i, ChronoUnit.DAYS);
 
-                // Almacenar el objeto Weather en el store, si es necesario
-                if (weatherStore != null) {
-                    weatherStore.save(weather);
-                }
+                // Obtener datos climáticos para la ubicación y tiempo actual
+                Weather weather = weatherProvider.getWeather(location, currentTime);
+
+                // Guardar los datos climáticos en el almacén
+                weatherStore.save(weather);
             }
         }
     }
