@@ -6,5 +6,5 @@ import dacd.suarez.model.Weather;
 import java.time.Instant;
 
 public interface WeatherProvider {
-    Weather getWeather(Location location, Instant dt);
+    Weather getWeather(Location location, Instant instant);
 }

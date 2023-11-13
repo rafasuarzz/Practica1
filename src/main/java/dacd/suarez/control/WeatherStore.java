@@ -7,5 +7,5 @@ import java.time.Instant;
 
 public interface WeatherStore {
     void save(Weather weather);
-    Weather load(Location location, Instant dt);
+    void load(Location location, Instant instant);
 }

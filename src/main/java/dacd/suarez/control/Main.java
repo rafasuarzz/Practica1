@@ -51,13 +51,13 @@ public class Main {
 
 
 
-                Weather weatherObject = new Weather(temp, humidity, cloud, speed, pop, weatherInstant, location);
+                Weather weatherObject = new Weather(temp, humidity, cloud, speed, pop, weatherInstant);
                 weatherList.add(weatherObject);
             }
 
             for (Weather weatherIter : weatherList) {
-                System.out.println("City: " + weatherIter.getLocation().getName() + ", Wind: " + weatherIter.getSpeed() + " m/s" + ", Temperature: " + weatherIter.getTemp() + "º" + ", Humidity: " + weatherIter.getHumidity()
-                        + "%" + ", Clouds: " + weatherIter.getAll() + ", Precipitation: " + weatherIter.getPop() + "%" + ", Date: " + weatherIter.getDt() );
+                //System.out.println("City: " + weatherIter.getLocation().getName() + ", Wind: " + weatherIter.getSpeed() + " m/s" + ", Temperature: " + weatherIter.getTemp() + "º" + ", Humidity: " + weatherIter.getHumidity()
+                       // + "%" + ", Clouds: " + weatherIter.getAll() + ", Precipitation: " + weatherIter.getPop() + "%" + ", Date: " + weatherIter.getDt() );
             }
 
         } catch (IOException e) {
