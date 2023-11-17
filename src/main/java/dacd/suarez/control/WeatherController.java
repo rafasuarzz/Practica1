@@ -10,9 +10,12 @@ import java.util.List;
 
 public class WeatherController {
     private WeatherProvider weatherProvider;
+    private WeatherStore weatherStore;
 
-    public WeatherController(WeatherProvider weatherProvider) {
+    public WeatherController(WeatherProvider weatherProvider, WeatherStore weatherStore) {
         this.weatherProvider = weatherProvider;
+        this.weatherStore = weatherStore;
+
     }
 
     // Constructor
@@ -24,7 +27,7 @@ public class WeatherController {
         Location laPalma = new Location("Santa Cruz de la Palma", 28.68351, -17.7642);
         Location laGomera = new Location("San Sebastián de la Gomera", 28.09163, -17.11331);
         Location tenerife = new Location("Santa Cruz de Tenerife", 27.80628, -17.91578);
-        Location granCanaria = new Location("Las Palmas de Gran Canaria", 28.09973, -15.41343);
+        Location granCanaria = new Location("Las Palmas de Gran_Canaria", 28.09973, -15.41343);
         Location fuerteventura = new Location("Puerto del Rosario", 28.50038, -13.86272);
         Location lanzarote = new Location("Arrecife", 28.96302, -13.54769);
         Location laGraciosa = new Location("Caleta de Sebo", 29.23147, -13.50341);
@@ -32,60 +35,41 @@ public class WeatherController {
         List<Location> locationList = List.of(elHierro, laPalma, laGomera, tenerife, granCanaria,
                 fuerteventura, lanzarote, laGraciosa);
 
-        ArrayList<Instant> instantList = new ArrayList<>();
-        ArrayList<Weather> weatherArrayList = new ArrayList<>();
+        List<Instant> instantList = createInstantList();
 
-        createInstant(instantList);
-        getWeatherCall(instantList, locationList, weatherArrayList);
-        loadCall(instantList, locationList);
+        getAndPrintWeatherData(locationList, instantList);
+        loadWeatherDataToDatabase(locationList, instantList);
+
     }
-
-    public static ArrayList<Instant> createInstant(ArrayList<Instant> instants) {
+    private List<Instant> createInstantList() {
+        List<Instant> instants = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            LocalDate hoy = LocalDate.now();
-            LocalTime hour = LocalTime.of(12, 0);
-            LocalDateTime todayHour = LocalDateTime.of(hoy, hour);
-            Instant instant = todayHour.toInstant(ZoneOffset.UTC);
-            Instant instant1 = instant.plus(i, ChronoUnit.DAYS);
-            instants.add(instant1);
+            instants.add(Instant.now().plus(i, ChronoUnit.DAYS).truncatedTo(ChronoUnit.DAYS).plus(12, ChronoUnit.HOURS));
         }
         return instants;
     }
-
-    public static ArrayList<Weather> getWeatherCall(ArrayList<Instant> instantList, List<Location> locationList,
-                                                    ArrayList<Weather> weatherArrayList) {
-        WeatherProvider weatherProvider = new OpenWeatherMapProvider();
-
-        for (Location iteredLocation : locationList) {
-            for (Instant iteredInstant : instantList) {
-                Weather weather = weatherProvider.getWeather(iteredLocation, iteredInstant);
+    private void getAndPrintWeatherData(List<Location> locationList, List<Instant> instantList) {
+        for (Location location : locationList) {
+            for (Instant instant : instantList) {
+                Weather weather = weatherProvider.getWeather(location, instant);
 
                 if (weather != null) {
-                    System.out.println("Weather for " + iteredLocation.getName() + " at " + iteredInstant + ":");
+                    System.out.println("Weather for " + location.getName() + " at " + instant + ":");
                     System.out.println(weather);
-                    System.out.println("\n");
+                    System.out.println();
                 } else {
-                    System.out.println("No weather data found for " + iteredLocation.getName() + " at " + iteredInstant);
+                    System.out.println("No weather data found for " + location.getName() + " at " + instant);
                 }
-                weatherArrayList.add(weather);
-            }
-        }
-        return weatherArrayList;
-    }
-
-    public static void loadCall(ArrayList<Instant> instantList, List<Location> locationList){
-        WeatherStore weatherStore = new SqliteWeatherStore();
-        for (Location iteredLocation : locationList) {
-            for (Instant iteredInstant : instantList) {
-                weatherStore.load(iteredLocation, iteredInstant);
-
             }
         }
     }
 
-    public static void main(String[] args) {
-        WeatherController weatherController = new WeatherController(new OpenWeatherMapProvider());
-        weatherController.execute();
+    private void loadWeatherDataToDatabase(List<Location> locationList, List<Instant> instantList) {
+        for (Location location : locationList) {
+            for (Instant instant : instantList) {
+                weatherStore.load(location, instant);
+            }
+        }
     }
 }
 

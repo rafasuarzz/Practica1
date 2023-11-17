@@ -9,16 +9,18 @@ public class Weather {
     private final double speed;
     private final double pop;
     private final Instant instant;
+    private final Location location;
 
 
 
-    public Weather(double temp, int humidity, int all, double speed, double pop, Instant instant) {
+    public Weather(double temp, int humidity, int all, double speed, double pop, Instant instant, Location location) {
         this.temp = temp;
         this.humidity = humidity;
         this.all = all;
         this.speed = speed;
         this.pop = pop;
         this.instant = instant;
+        this.location = location;
     }
 
 
@@ -46,16 +48,8 @@ public class Weather {
         return instant;
     }
 
-
-    @Override
-    public String toString() {
-        return "Weather{" +
-                "clouds=" + all +
-                ", wind=" + speed +
-                ", temperature=" + temp +
-                ", humidity=" + humidity +
-                ", instant=" + instant +
-                ", pop=" + pop +
-                '}';
+    public Location getLocation() {
+        return location;
     }
+
 }

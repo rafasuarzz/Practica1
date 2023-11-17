@@ -15,13 +15,26 @@ import java.time.Instant;
 
 
 public class OpenWeatherMapProvider implements WeatherProvider {
-    private static final String API_KEY = "724ea6ff6c24bf793a2f723008965e34"; // Reemplaza "your-api-key" con tu propia clave de API de OpenWeatherMap
+    private static String API_KEY;
+    private static String URL;
+
+    public OpenWeatherMapProvider(String API_KEY, String URL) {
+        this.API_KEY = API_KEY;
+        this.URL = URL;
+    }
+
+    public static String getAPI_KEY() {
+        return API_KEY;
+    }
+
+    public static String getURL() {
+        return URL;
+    }
 
     @Override
     public Weather getWeather(Location location, Instant instant) {
-        Weather weatherObject = null;
         try {
-            String apiUrl = "https://api.openweathermap.org/data/2.5/forecast?lat="+ location.getLat()+
+            String apiUrl = URL + "?lat="+ location.getLat()+
                     "&lon="+location.getLon()+ "&appid=" + API_KEY + "&units=metric";
 
             String jsonString = Jsoup.connect(apiUrl).ignoreContentType(true).execute().body();
@@ -48,8 +61,7 @@ public class OpenWeatherMapProvider implements WeatherProvider {
                 long unixTimestamp = dt;
                 Instant weatherInstant = Instant.ofEpochSecond(unixTimestamp);
                 if (weatherInstant.equals(instant)) {
-                    weatherObject = new Weather(temperature, humidity, all, windSpeed, pop, weatherInstant);
-                    break;
+                    return new Weather(temperature, humidity, all, windSpeed, pop, weatherInstant, location);
                 }
 
             }
@@ -57,6 +69,6 @@ public class OpenWeatherMapProvider implements WeatherProvider {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return weatherObject;
+        return null;
     }
 }
