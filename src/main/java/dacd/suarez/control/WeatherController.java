@@ -11,10 +11,13 @@ import java.util.List;
 public class WeatherController {
     private WeatherProvider weatherProvider;
     private WeatherStore weatherStore;
+    private int days = 5;
+    private List<Location> locationList;
 
     public WeatherController(WeatherProvider weatherProvider, WeatherStore weatherStore) {
         this.weatherProvider = weatherProvider;
         this.weatherStore = weatherStore;
+
 
     }
 
@@ -28,7 +31,7 @@ public class WeatherController {
         Location lanzarote = new Location("Arrecife", 28.96302, -13.54769);
         Location laGraciosa = new Location("Caleta de Sebo", 29.23147, -13.50341);
 
-        List<Location> locationList = List.of(elHierro, laPalma, laGomera, tenerife, granCanaria,
+        locationList = List.of(elHierro, laPalma, laGomera, tenerife, granCanaria,
                 fuerteventura, lanzarote, laGraciosa);
 
         List<Instant> instantList = createInstantList();
@@ -39,7 +42,7 @@ public class WeatherController {
     }
     private List<Instant> createInstantList() {
         List<Instant> instants = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < days; i++) {
             instants.add(Instant.now().plus(i, ChronoUnit.DAYS).truncatedTo(ChronoUnit.DAYS).plus(12, ChronoUnit.HOURS));
         }
         return instants;

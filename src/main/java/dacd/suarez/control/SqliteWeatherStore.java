@@ -3,6 +3,7 @@ package dacd.suarez.control;
 import dacd.suarez.model.Location;
 import dacd.suarez.model.Weather;
 
+
 import java.sql.*;
 import java.time.Instant;
 import java.util.List;
