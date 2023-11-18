@@ -18,10 +18,6 @@ public class WeatherController {
 
     }
 
-    // Constructor
-
-
-    // Método para ejecutar la obtención de datos climáticos
     public void execute() {
         Location elHierro = new Location("Valverde", 28.46824, -16.25462);
         Location laPalma = new Location("Santa Cruz de la Palma", 28.68351, -17.7642);
