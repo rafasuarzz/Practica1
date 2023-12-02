@@ -8,8 +8,9 @@ public class Main {
     public static void main(String[] args) {
 
         WeatherProvider weatherProvider = new OpenWeatherMapProvider(args[0], "https://api.openweathermap.org/data/2.5/forecast");
-        WeatherStore weatherStore = new SqliteWeatherStore("jdbc:sqlite:" + args[1]);
+        WeatherStore weatherStore = new JMSWeatherStore();
         WeatherController weatherController = new WeatherController(weatherProvider, weatherStore);
+
 
         Timer timer = new Timer();
 

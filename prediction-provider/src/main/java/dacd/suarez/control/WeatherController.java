@@ -17,8 +17,6 @@ public class WeatherController {
     public WeatherController(WeatherProvider weatherProvider, WeatherStore weatherStore) {
         this.weatherProvider = weatherProvider;
         this.weatherStore = weatherStore;
-
-
     }
 
     public void execute() {
@@ -37,9 +35,9 @@ public class WeatherController {
         List<Instant> instantList = createInstantList();
 
         getAndPrintWeatherData(locationList, instantList);
-        loadWeatherDataToDatabase(locationList, instantList);
-
+        loadWeatherDataToDatabase(weatherProvider, locationList, instantList);
     }
+
     private List<Instant> createInstantList() {
         List<Instant> instants = new ArrayList<>();
         for (int i = 0; i < days; i++) {
@@ -47,6 +45,7 @@ public class WeatherController {
         }
         return instants;
     }
+
     private void getAndPrintWeatherData(List<Location> locationList, List<Instant> instantList) {
         for (Location location : locationList) {
             for (Instant instant : instantList) {
@@ -63,12 +62,16 @@ public class WeatherController {
         }
     }
 
-    private void loadWeatherDataToDatabase(List<Location> locationList, List<Instant> instantList) {
+    private void loadWeatherDataToDatabase(WeatherProvider weatherProvider, List<Location> locationList, List<Instant> instantList) {
         for (Location location : locationList) {
             for (Instant instant : instantList) {
-                weatherStore.load(location, instant);
+                Weather weather = weatherProvider.getWeather(location, instant);
+                if (weather != null) {
+                    weatherStore.save(weather);
+                } else {
+                    System.out.println("No weather data found for " + location.getName() + " at " + instant);
+                }
             }
         }
     }
 }
-
