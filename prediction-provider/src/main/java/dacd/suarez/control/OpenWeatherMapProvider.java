@@ -23,14 +23,6 @@ public class OpenWeatherMapProvider implements WeatherProvider {
         this.URL = URL;
     }
 
-    public static String getAPI_KEY() {
-        return API_KEY;
-    }
-
-    public static String getURL() {
-        return URL;
-    }
-
     @Override
     public Weather getWeather(Location location, Instant instant) {
         try {

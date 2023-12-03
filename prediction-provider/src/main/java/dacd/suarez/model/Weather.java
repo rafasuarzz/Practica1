@@ -25,32 +25,4 @@ public class Weather {
         this.location = location;
     }
 
-    public double getTemperature() {
-        return temperature;
-    }
-
-    public int getHumidity() {
-        return humidity;
-    }
-
-    public int getClouds() {
-        return clouds;
-    }
-
-    public double getWindSpeed() {
-        return windSpeed;
-    }
-
-    public double getRainProbability() {
-        return rainProbability;
-    }
-
-    public Instant getInstant() {
-        return instant;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
 }

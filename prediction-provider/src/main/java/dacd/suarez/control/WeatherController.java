@@ -53,8 +53,6 @@ public class WeatherController {
 
                 if (weather != null) {
                     System.out.println("Weather for " + location.getName() + " at " + instant + ":");
-                    System.out.println(weather);
-                    System.out.println();
                 } else {
                     System.out.println("No weather data found for " + location.getName() + " at " + instant);
                 }
