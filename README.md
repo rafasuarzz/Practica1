@@ -1,4 +1,4 @@
-# Practice 1
+# Practice 2
 - **Name:** Rafael Suárez Saavedra
 - **Subject:** Desarrollo de Aplicaciones para la Ciencia de Datos
 - **Year:** Second
@@ -64,9 +64,14 @@ To develop the project, I used only the IntelliJ development environment. Additi
 
 
 **Design:**
+
+ prediction-provider:
  
- 
- <img width="903" alt="Captura de pantalla 2023-11-18 a las 19 49 22" src="https://github.com/rafasuarzz/Practica1/assets/145263164/2b9d8e09-932b-4d9c-ba5e-274184f59bd6">
+ <img width="850" alt="Captura de pantalla 2023-12-09 a las 17 47 22" src="https://github.com/rafasuarzz/Practica1/assets/145263164/598e40fa-5c9f-41ab-af4e-0db3af541d60">
+
+event-store-builder:
+
+<img width="592" alt="Captura de pantalla 2023-12-09 a las 18 00 42" src="https://github.com/rafasuarzz/Practica1/assets/145263164/e8f6c884-6549-4a30-8ef2-089e2403ee37">
 
 
 
