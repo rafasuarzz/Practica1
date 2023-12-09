@@ -1,4 +1,4 @@
-# Practice 1
+# Practice 2
 - **Name:** Rafael Suárez Saavedra
 - **Subject:** Desarrollo de Aplicaciones para la Ciencia de Datos
 - **Year:** Second
@@ -7,9 +7,9 @@
 - **University:** University of Las Palmas de Gran Canaria
 
 
-**Functionality:** The provided project is a meteorological data management system that uses an SQLite database to store and update information about the weather for the next 5 days in different locations in the Canary Islands. Here is a summary of the main functionalities and components of the system:
+**Functionality:** The provided project is a meteorological data management system designed to interact with a broker for event storage. The system includes the following components:
 
-1. **Main:**
+1. **Main_event_provider:**
    - Initializes the system with a timer that periodically updates meteorological data using a controller.
    - To run the code correctly, an API key and the desired database path must be passed as arguments, in that order.
 
@@ -27,17 +27,36 @@
     - Interface defining a method to obtain meteorological data for a specific location and time.
 
 6. **WeatherStore:**
-   - Interface defining methods to save and load meteorological data.
+   - Interface defining method save from meteorological data.
   
 7. **OpenWeatherMapProvider::**
    - Implementation of WeatherProvider that uses the OpenWeatherMap API to obtain meteorological data.
 
-8. **SqliteWeatherStore:**
-   - Implementation of `WeatherStore` that uses an SQLite database to persist meteorological data.
-   - Creates tables for each location in the database.
-   - Implements methods to save, update, check existence, and load meteorological data.
+8. **JMSWeatherStore:**
+   - Previously responsible for saving weather data to an SQLite database.
+   - Modified to interact with the ActiveMQ broker instead of persisting data in SQLite.
+  
+9. **AMQTopicSubscriber:**
+   - Represents a subscriber to a topic in ActiveMQ, allowing the system to receive weather-related messages.
+   - Utilizes the Java Message Service (JMS) API for communication.
+   - Creates a durable subscriber to a specified topic and listens for incoming messages.
+   - Passes received messages to a listener for further processing.
+  
+10. **FileEventStoreBuilder:**
+   - Implements the Listener interface to handle incoming weather-related messages.
+   - Parses JSON messages and extracts relevant data such as location, timestamp, etc.
+   - Utilizes the Gson library for JSON parsing.
+   - Processes the data and saves it as an event in a directory structure based on location and date.
 
-In summary, the system loads meteorological data from OpenWeatherMap and stores it in an SQLite database. It also manages the periodic update of data using a timer.
+11. **Listener Interface:**
+   - Defines a common interface for classes that handle incoming messages.
+  
+12. **Listener Interface:**
+   - Defines a common interface for classes that handle received messages.
+
+13. **Main_event_store_builder:**
+   - Main class responsible for initializing the system with an AMQTopicSubscriber and FileEventStoreBuilder.
+   - Configures the ActiveMQ broker connection and specifies the directory for event storage.
 
 
 **Resources Used:**
@@ -45,9 +64,14 @@ To develop the project, I used only the IntelliJ development environment. Additi
 
 
 **Design:**
+
+ prediction-provider:
  
- 
- <img width="903" alt="Captura de pantalla 2023-11-18 a las 19 49 22" src="https://github.com/rafasuarzz/Practica1/assets/145263164/2b9d8e09-932b-4d9c-ba5e-274184f59bd6">
+ <img width="850" alt="Captura de pantalla 2023-12-09 a las 17 47 22" src="https://github.com/rafasuarzz/Practica1/assets/145263164/598e40fa-5c9f-41ab-af4e-0db3af541d60">
+
+event-store-builder:
+
+<img width="592" alt="Captura de pantalla 2023-12-09 a las 18 00 42" src="https://github.com/rafasuarzz/Practica1/assets/145263164/e8f6c884-6549-4a30-8ef2-089e2403ee37">
 
 
 
