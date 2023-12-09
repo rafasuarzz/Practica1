@@ -19,7 +19,7 @@ public class WeatherController {
         this.weatherStore = weatherStore;
     }
 
-    public void execute() {
+    public void execute(){
         Location elHierro = new Location("Valverde", 28.46824, -16.25462);
         Location laPalma = new Location("Santa Cruz de la Palma", 28.68351, -17.7642);
         Location laGomera = new Location("San Sebastián de la Gomera", 28.09163, -17.11331);
@@ -46,7 +46,7 @@ public class WeatherController {
         return instants;
     }
 
-    private void getAndPrintWeatherData(List<Location> locationList, List<Instant> instantList) {
+    private void getAndPrintWeatherData(List<Location> locationList, List<Instant> instantList){
         for (Location location : locationList) {
             for (Instant instant : instantList) {
                 Weather weather = weatherProvider.getWeather(location, instant);

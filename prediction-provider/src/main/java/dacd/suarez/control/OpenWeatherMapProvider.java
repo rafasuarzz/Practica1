@@ -24,7 +24,7 @@ public class OpenWeatherMapProvider implements WeatherProvider {
     }
 
     @Override
-    public Weather getWeather(Location location, Instant instant) {
+    public Weather getWeather(Location location, Instant instant){
         try {
             String apiUrl = URL + "?lat="+ location.getLat()+
                     "&lon="+location.getLon()+ "&appid=" + API_KEY + "&units=metric";

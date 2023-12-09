@@ -11,18 +11,18 @@ import javax.jms.*;
 import java.time.Instant;
 
 public class JMSWeatherStore implements WeatherStore {
-    private static String BROKER_URL = ActiveMQConnection.DEFAULT_BROKER_URL;
-    private static String TOPIC_NAME = " prediction.Weather";
+    private static String brokerUrl = ActiveMQConnection.DEFAULT_BROKER_URL;
+    private static String topicName = " prediction.Weather";
 
 
     public void save(Weather weather) {
         try {
-            ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(BROKER_URL);
+            ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(brokerUrl);
            Connection connection = connectionFactory.createConnection();
             connection.start();
 
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            Topic topic = session.createTopic(TOPIC_NAME);
+            Topic topic = session.createTopic(topicName);
             MessageProducer producer = session.createProducer(topic);
 
             Gson gson = new GsonBuilder()

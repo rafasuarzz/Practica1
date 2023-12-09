@@ -18,11 +18,11 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>dacd.suarez</groupId>
-            <artifactId>prediction-provider</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.6</version>
         </dependency>
     </dependencies>
+
 
 </project>

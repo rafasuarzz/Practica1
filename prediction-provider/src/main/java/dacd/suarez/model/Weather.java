@@ -9,8 +9,8 @@ public class Weather {
     private final double windSpeed;
     private final double rainProbability;
     private final Instant instant;
-    private static Instant predictionTime = Instant.now() ;
-    private static String ss = "prediction-provider";
+    private final Instant predictionTime;
+    private final String ss;
     private final Location location;
 
 
@@ -23,28 +23,10 @@ public class Weather {
         this.rainProbability = rainProbability;
         this.instant = instant;
         this.location = location;
+        this.predictionTime = Instant.now();
+        this.ss =  "prediction-provider";
     }
 
-    public Instant getInstant() {
-        return instant;
-    }
 
-    public static Instant getPredictiontime() {
-        return predictionTime;
-    }
 
-    public static String getSs() {
-        return ss;
-    }
-    public String toString() {
-        return "City=" + location.getName() +
-                ", Lat=" + location.getLat() +
-                ", Lon=" + location.getLon() +
-                ", temperature=" + temperature +
-                ", humidity=" + humidity +
-                ", clouds=" + clouds +
-                ", windSpeed=" + windSpeed +
-                ", rainProbability=" + rainProbability +
-                ", instant=" + instant ;
-    }
 }
