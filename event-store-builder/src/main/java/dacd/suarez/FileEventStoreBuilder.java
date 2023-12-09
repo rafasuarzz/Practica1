@@ -16,17 +16,16 @@ import java.time.format.DateTimeFormatter;
 public class FileEventStoreBuilder implements Listener {
 
     private final String eventStoreDirectory ;
-    private final Gson gson;
 
     public FileEventStoreBuilder(String eventStoreDirectory) {
         this.eventStoreDirectory = eventStoreDirectory;
-        this.gson = new Gson();
     }
 
     @Override
     public void consume(String message) {
         try {
             System.out.println("Received Weather: " + message);
+            Gson gson = new Gson();
             JsonObject jsonObject = gson.fromJson(message, JsonObject.class);
 
             String  ssValue = jsonObject.get("ss").getAsString();
