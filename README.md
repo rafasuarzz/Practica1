@@ -51,7 +51,7 @@
 11. **Listener Interface:**
    - Defines a common interface for classes that handle incoming messages.
   
-12. **Listener Interface:**
+12. **Subscriber Interface:**
    - Defines a common interface for classes that handle received messages.
 
 13. **Main_event_store_builder:**
