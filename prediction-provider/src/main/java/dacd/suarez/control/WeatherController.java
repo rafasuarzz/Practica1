@@ -20,21 +20,9 @@ public class WeatherController {
     }
 
     public void execute(){
-        Location elHierro = new Location("Valverde", 28.46824, -16.25462);
-        Location laPalma = new Location("Santa Cruz de la Palma", 28.68351, -17.7642);
-        Location laGomera = new Location("San Sebastián de la Gomera", 28.09163, -17.11331);
-        Location tenerife = new Location("Santa Cruz de Tenerife", 27.80628, -17.91578);
-        Location granCanaria = new Location("Las Palmas de Gran_Canaria", 28.09973, -15.41343);
-        Location fuerteventura = new Location("Puerto del Rosario", 28.50038, -13.86272);
-        Location lanzarote = new Location("Arrecife", 28.96302, -13.54769);
-        Location laGraciosa = new Location("Caleta de Sebo", 29.23147, -13.50341);
-
-        locationList = List.of(elHierro, laPalma, laGomera, tenerife, granCanaria,
-                fuerteventura, lanzarote, laGraciosa);
-
         List<Instant> instantList = createInstantList();
+        locationList = createLocationList();
 
-        getAndPrintWeatherData(locationList, instantList);
         loadWeatherDataToDatabase(weatherProvider, locationList, instantList);
     }
 
@@ -45,19 +33,15 @@ public class WeatherController {
         }
         return instants;
     }
-
-    private void getAndPrintWeatherData(List<Location> locationList, List<Instant> instantList){
-        for (Location location : locationList) {
-            for (Instant instant : instantList) {
-                Weather weather = weatherProvider.getWeather(location, instant);
-
-                if (weather != null) {
-                    System.out.println("Weather for " + location.getName() + " at " + instant + ":");
-                } else {
-                    System.out.println("No weather data found for " + location.getName() + " at " + instant);
-                }
-            }
-        }
+    private List<Location> createLocationList() {
+        return List.of( new Location("Valverde", 28.46824, -16.25462),
+        new Location("Santa Cruz de la Palma", 28.68351, -17.7642),
+        new Location("San Sebastián de la Gomera", 28.09163, -17.11331),
+        new Location("Santa Cruz de Tenerife", 27.80628, -17.91578),
+        new Location("Las Palmas de Gran_Canaria", 28.09973, -15.41343),
+        new Location("Puerto del Rosario", 28.50038, -13.86272),
+        new Location("Arrecife", 28.96302, -13.54769),
+        new Location("Caleta de Sebo", 29.23147, -13.50341));
     }
 
     private void loadWeatherDataToDatabase(WeatherProvider weatherProvider, List<Location> locationList, List<Instant> instantList) {
@@ -65,6 +49,7 @@ public class WeatherController {
             for (Instant instant : instantList) {
                 Weather weather = weatherProvider.getWeather(location, instant);
                 if (weather != null) {
+                    System.out.println("Weather for " + location.getName() + " at " + instant + ":");
                     weatherStore.save(weather);
                 } else {
                     System.out.println("No weather data found for " + location.getName() + " at " + instant);

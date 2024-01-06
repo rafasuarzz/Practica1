@@ -4,7 +4,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
-public class Main_prediction_provider {
+public class Main {
     public static void main(String[] args) {
 
         WeatherProvider weatherProvider = new OpenWeatherMapProvider(args[0], "https://api.openweathermap.org/data/2.5/forecast");

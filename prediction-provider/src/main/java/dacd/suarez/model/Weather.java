@@ -8,8 +8,8 @@ public class Weather {
     private final int clouds;
     private final double windSpeed;
     private final double rainProbability;
-    private final Instant instant;
     private final Instant predictionTime;
+    private final Instant ts;
     private final String ss;
     private final Location location;
 
@@ -21,9 +21,9 @@ public class Weather {
         this.clouds = clouds;
         this.windSpeed = windSpeed;
         this.rainProbability = rainProbability;
-        this.instant = instant;
+        this.predictionTime = instant;
         this.location = location;
-        this.predictionTime = Instant.now();
+        this.ts = Instant.now();
         this.ss =  "prediction-provider";
     }
 

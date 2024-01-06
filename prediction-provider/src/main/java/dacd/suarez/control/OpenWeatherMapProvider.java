@@ -45,12 +45,12 @@ public class OpenWeatherMapProvider implements WeatherProvider {
                 double temperature = main.get("temp").getAsDouble();
                 int humidity = main.get("humidity").getAsInt();
                 double pop = weatherJsonObject.get("pop").getAsDouble();
-                int dt = weatherJsonObject.get("dt").getAsInt();
+                long ts = weatherJsonObject.get("dt").getAsLong();
                 int all = clouds.get("all").getAsInt();
                 double windSpeed = wind.get("speed").getAsDouble();
 
 
-                long unixTimestamp = dt;
+                long unixTimestamp = ts;
                 Instant weatherInstant = Instant.ofEpochSecond(unixTimestamp);
                 if (weatherInstant.equals(instant)) {
                     return new Weather(temperature, humidity, all, windSpeed, pop, weatherInstant, location);

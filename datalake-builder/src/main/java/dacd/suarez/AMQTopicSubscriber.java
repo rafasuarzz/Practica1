@@ -7,7 +7,7 @@ import javax.jms.*;
 
 public class AMQTopicSubscriber implements Subscriber {
 
-    private static final String clientID = "ClientID";
+    private static final String clientID = "datalake-builder";
     private Connection connection;
     private Session session;
 
@@ -23,19 +23,15 @@ public class AMQTopicSubscriber implements Subscriber {
     public void start(String topicName, Listener listener) {
         try {
             Topic destination = session.createTopic(topicName);
-
-            MessageConsumer subscriber = session.createDurableSubscriber(destination, "prediction-provider-" + topicName);
-
-
+            MessageConsumer subscriber = session.createDurableSubscriber(destination, clientID+ topicName);
             subscriber.setMessageListener(message -> {
-                if (message instanceof TextMessage) {
-                    try {
-                        String messageText = ((TextMessage) message).getText();
-                        listener.consume(messageText);
-                    } catch (JMSException e) {
-                        throw new RuntimeException("Error while processing JMS message", e);
-                    }
+                try {
+                    listener.consume(((TextMessage) message).getText(), topicName);
+                    System.out.println(message);
+                } catch (JMSException e) {
+                    throw new RuntimeException("Error while processing JMS message", e);
                 }
+
             });
         } catch (JMSException e) {
             throw new RuntimeException("Error receiving JMS message", e);

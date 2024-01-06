@@ -22,8 +22,8 @@ public class JMSWeatherStore implements WeatherStore {
             connection.start();
 
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            Topic topic = session.createTopic(topicName);
-            MessageProducer producer = session.createProducer(topic);
+            Destination destination = session.createTopic(topicName);
+            MessageProducer producer = session.createProducer(destination);
 
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(Instant.class, (JsonSerializer<Instant>) (src, typeOfSrc, context) ->

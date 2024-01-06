@@ -9,7 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>event-store-builder</artifactId>
+    <artifactId>datalake-builder</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -32,7 +32,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>dacd.suarez.Main_event_store_builder</mainClass>
+                            <mainClass>dacd.suarez.Main</mainClass>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib</classpathPrefix>
                         </manifest>

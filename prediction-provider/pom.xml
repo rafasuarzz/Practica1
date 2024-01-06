@@ -44,7 +44,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>dacd.suarez.control.Main_prediction_provider</mainClass>
+                            <mainClass>dacd.suarez.control.Main</mainClass>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib</classpathPrefix>
                         </manifest>
