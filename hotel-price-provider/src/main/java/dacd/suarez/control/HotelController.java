@@ -1,12 +1,36 @@
 package dacd.suarez.control;
 
+import dacd.suarez.model.Booking;
 import dacd.suarez.model.Hotel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HotelController {
+    private final JMSHotelSender jmsHotelSender;
+
+    public HotelController(JMSHotelSender jMSHotelSender) {
+        this.jmsHotelSender = jMSHotelSender;
+    }
+
+    public void execute(){
+
+        List<Booking> bookingList = new ArrayList<>();
+
+        for (Hotel hotel : createHotelList()) {
+            Booking booking = new OpenHotelProvider().getHotelDetails(hotel);
+            if (booking != null) {
+                bookingList.add(booking);
+            }
+        }
+
+        for (Booking booking : bookingList) {
+            jmsHotelSender.send(booking);
+        }
+    }
 
     private List<Hotel> createHotelList(){
+
         return List.of(
                 new Hotel("Gran Canaria", "Gloria Palace Amadores Thalasso & Hotel", "g635887-d530796"),
                 new Hotel("Gran Canaria", "Axel Beach Maspalomas", "g562819-d4107099"),
