@@ -58,6 +58,12 @@
    - Main class responsible for initializing the system with an AMQTopicSubscriber and FileEventStoreBuilder.
    - Configures the ActiveMQ broker connection and specifies the directory for event storage.
 
+**Design Principles:**
+Adheres to the Single Responsibility Principle (SRP) by assigning specific responsibilities to each class. Implements dependency injection in WeatherController to enable testing and enhance flexibility.
+
+**Design Principles and Patterns:**
+Aligns with the Single Responsibility Principle (SRP) and Dependency Inversion Principle (DIP). Incorporates the Observer Pattern in AMQTopicSubscriber for asynchronous message processing.
+
 
 **Resources Used:**
 To develop the project, I used only the IntelliJ development environment. Additionally, I used git and GitHub as version control tools for my code. Finally, I used two OpenAI models, ChatGPT and AskCodi, to help me with issues that arose in the code. I tried not to rely solely on one to compare and verify the information they provided, aiming to achieve more reliable and effective code.
