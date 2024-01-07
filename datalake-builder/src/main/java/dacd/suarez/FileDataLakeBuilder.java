@@ -21,9 +21,10 @@ public class FileDataLakeBuilder implements Listener {
 
     @Override
     public void consume(String message, String topicName) {
-        String dataLakePath = eventStoreDirectory + "\\" + "datalake" + "\\" + "eventstore";
+        String dataLakePath = eventStoreDirectory + File.separator + "datalake" + File.separator + "eventstore";
 
-        System.out.println("Received Weather: " + message);
+
+        System.out.println("Received Information: " + message);
         Gson gson = new Gson();
         JsonObject jsonObject = gson.fromJson(message, JsonObject.class);
 
@@ -37,10 +38,10 @@ public class FileDataLakeBuilder implements Listener {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         String formattedDate = dateTime.format(formatter);
 
-        String directoryPath = dataLakePath + "\\" + topicName + "\\" + ssValue;
+        String directoryPath = dataLakePath + File.separator + topicName + File.separator + ssValue;
         createDirectory(directoryPath);
 
-        String filePath = directoryPath + "\\" + formattedDate + ".events";
+        String filePath = directoryPath + File.separator + formattedDate + ".events";
         writeMessage(filePath, message);
     }
 

@@ -5,19 +5,17 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 import javax.jms.*;
 
 
-public class AMQDataLakeSubscriber implements Subscriber {
+public class AMQDataMartSubscriber implements Subscriber {
 
-    private final String clientID = "datalake-builder";
     private final Connection connection;
     private final Session session;
     private final String topicWeather = "prediction.Weather";
     private final String topicHotel = "hotel.booking";
 
 
-    public AMQDataLakeSubscriber(String BROKER_URL) throws JMSException{
+    public AMQDataMartSubscriber(String BROKER_URL) throws JMSException{
         ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(BROKER_URL);
         connection = connectionFactory.createConnection();
-        connection.setClientID(clientID);
         connection.start();
         session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
     }
@@ -28,8 +26,8 @@ public class AMQDataLakeSubscriber implements Subscriber {
             Topic weatherDestination = session.createTopic(topicWeather);
             Topic hotelDestination = session.createTopic(topicHotel);
 
-            MessageConsumer weatherConsumer = session.createDurableSubscriber(weatherDestination, clientID + topicWeather);
-            MessageConsumer hotelConsumer = session.createDurableSubscriber(hotelDestination, clientID + topicHotel);
+            MessageConsumer weatherConsumer = session.createConsumer(weatherDestination);
+            MessageConsumer hotelConsumer = session.createConsumer(hotelDestination);
 
             weatherConsumer.setMessageListener(message -> handleMessage(message, listener, topicWeather));
             hotelConsumer.setMessageListener(message -> handleMessage(message, listener, topicHotel));
