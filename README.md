@@ -1,4 +1,4 @@
-# Practice 2
+# Final Project
 - **Name:** Rafael Suárez Saavedra
 - **Subject:** Desarrollo de Aplicaciones para la Ciencia de Datos
 - **Year:** Second
@@ -7,7 +7,7 @@
 - **University:** University of Las Palmas de Gran Canaria
 
 
-**Functionality:** The provided project is a meteorological data management system designed to interact with a broker for event storage. The system includes the following components:
+**Functionality:** This project involves creating a smart travel planning application for the Canary Islands. It integrates weather data from previous projects with new event data to showcase the best hotels with the most competitive rates for a 3-night stay in the selected location. The project comprises four main modules. The first module (prediction-provider) fetches weather data from the OpenWeatherMap API and sends it to a message broker using Java Message Service (JMS). The hotel-price-provider retrieves hotel data from the Xotelo API and sends it to a message broker via JMS. Subsequently, the datalake-builder module subscribes to the durable broker, processes incoming messages, and stores them in a datalake. Finally, the canary-insights-business-unit module subscribes to the durable broker, processes messages, and stores them in a datamart. Additionally, this module facilitates client interaction through a Command Line Interface (CLI).
 
 1. **Main_event_provider:**
    - Initializes the system with a timer that periodically updates meteorological data using a controller.
