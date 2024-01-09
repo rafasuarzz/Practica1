@@ -13,15 +13,9 @@ import java.time.format.DateTimeFormatter;
 
 public class FileDataLakeBuilder implements Listener {
 
-    private final String eventStoreDirectory ;
-
-    public FileDataLakeBuilder(String eventStoreDirectory) {
-        this.eventStoreDirectory = eventStoreDirectory;
-    }
-
     @Override
     public void consume(String message, String topicName) {
-        String dataLakePath = eventStoreDirectory + File.separator + "datalake" + File.separator + "eventstore";
+        String dataLakePath = "datalake" + File.separator + "eventstore";
 
 
         System.out.println("Received Information: " + message);

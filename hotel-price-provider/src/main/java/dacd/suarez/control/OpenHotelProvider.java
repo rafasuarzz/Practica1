@@ -3,12 +3,14 @@ package dacd.suarez.control;
 import com.google.gson.*;
 import dacd.suarez.model.Booking;
 import dacd.suarez.model.Hotel;
+import dacd.suarez.model.Rate;
 import org.jsoup.Jsoup;
 
 import java.io.IOException;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class OpenHotelProvider implements HotelProvider{
     @Override
@@ -27,9 +29,24 @@ public class OpenHotelProvider implements HotelProvider{
             booking.setCheck_out(result.getAsJsonObject("result").get("chk_out").getAsString());
 
             JsonArray ratesArray = result.getAsJsonObject("result").getAsJsonArray("rates");
+            ArrayList<Rate> rates = new ArrayList<>();
+
+            for (JsonElement rate : ratesArray) {
+                JsonObject rateObject = rate.getAsJsonObject();
+
+                String code = rateObject.getAsJsonPrimitive("code").getAsString();
+                String name = rateObject.getAsJsonPrimitive("name").getAsString();
+                int rateName = rateObject.getAsJsonPrimitive("rate").getAsInt();
+                int tax = rateObject.getAsJsonPrimitive("tax").getAsInt();
+
+                Rate rate1 = new Rate(code,name,rateName,tax);
+
+                rates.add(rate1);
+
+            }
 
             if (ratesArray != null && ratesArray.size() > 0) {
-                booking.setRates(ratesArray);
+                booking.setRates(rates);
                 hotel.setLocation(hotel.getLocation());
                 hotel.setHotel_name(hotel.getHotel_name());
                 return booking;
@@ -43,12 +60,12 @@ public class OpenHotelProvider implements HotelProvider{
     }
 
     public Booking getHotelDetails(Hotel hotel){
-        Booking booking = new Booking("default_check_in", "default_check_out", new JsonArray(), hotel);
+        Booking booking = new Booking("default_check_in", "default_check_out", new ArrayList<>(), hotel);
 
         hotel.setHotel_name(hotel.getHotel_name());
         hotel.setLocation(hotel.getLocation());
 
-        booking.setRates(new JsonArray());
+        booking.setRates(new ArrayList<>());
 
 
         try{

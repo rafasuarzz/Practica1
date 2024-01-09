@@ -7,7 +7,7 @@ import javax.jms.*;
 
 public class AMQDataLakeSubscriber implements Subscriber {
 
-    private final static String clientID = "datalake-builder-";
+    private final static String clientID = "datalake-builder";
     private final Connection connection;
     private final Session session;
     private final String topicWeather = "prediction.Weather";
@@ -28,8 +28,8 @@ public class AMQDataLakeSubscriber implements Subscriber {
             Topic weatherDestination = session.createTopic(topicWeather);
             Topic hotelDestination = session.createTopic(topicHotel);
 
-            MessageConsumer weatherConsumer = session.createDurableSubscriber(weatherDestination, clientID + topicWeather);
-            MessageConsumer hotelConsumer = session.createDurableSubscriber(hotelDestination, clientID + topicHotel);
+            MessageConsumer weatherConsumer = session.createDurableSubscriber(weatherDestination, clientID +"-"+ topicWeather);
+            MessageConsumer hotelConsumer = session.createDurableSubscriber(hotelDestination, clientID +"-"+ topicHotel);
 
             weatherConsumer.setMessageListener(message -> handleMessage(message, listener, topicWeather));
             hotelConsumer.setMessageListener(message -> handleMessage(message, listener, topicHotel));

@@ -16,6 +16,7 @@ public class FileDataMartBuilder implements Listener {
 
     private final String dataMartPath = "datamart" + File.separator + "eventstore";
     private final String fileName = "all_events";
+    private static boolean dataMartEmpty = false;
 
     @Override
     public void consume(String message, String topicName) {
@@ -36,7 +37,10 @@ public class FileDataMartBuilder implements Listener {
             String directoryPath = dataMartPath + File.separator + formattedDate;
             createDirectory(directoryPath);
 
-            cleanOldEvents(dataMartPath, formattedDate);
+            if (!dataMartEmpty) {
+                clearDataMart();
+                dataMartEmpty = true;
+            }
 
             String filePath = directoryPath + File.separator + fileName + ".events";
             writeMessage(filePath, message);
@@ -60,15 +64,13 @@ public class FileDataMartBuilder implements Listener {
         }
     }
 
-    private void cleanOldEvents(String dataMartPath, String currentFolder) {
+    private void clearDataMart() {
         File baseDirectory = new File(dataMartPath);
         File[] subdirectories = baseDirectory.listFiles(File::isDirectory);
 
-        if (subdirectories != null){
-            for (File subdirectory: subdirectories){
-                if (!subdirectory.getName().equals(currentFolder)){
-                    deleteDirectory(subdirectory);
-                }
+        if (subdirectories != null) {
+            for (File subdirectory : subdirectories) {
+                deleteDirectory(subdirectory);
             }
         }
     }
