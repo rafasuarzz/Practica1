@@ -40,6 +40,7 @@
  <img width="850" alt="Captura de pantalla 2023-12-09 a las 17 47 22" src="https://github.com/rafasuarzz/Practica1/assets/145263164/598e40fa-5c9f-41ab-af4e-0db3af541d60">
 
 datalake-builder:
+
 <img width="877" alt="Captura de pantalla 2024-01-09 a las 23 03 58" src="https://github.com/rafasuarzz/Practica1/assets/145263164/0d0dc63f-4599-4c46-93c0-370e86184af7">
 
 hotel-price-provider:
