@@ -7,7 +7,7 @@ import javax.jms.*;
 
 public class AMQDataLakeSubscriber implements Subscriber {
 
-    private final String clientID = "datalake-builder";
+    private final static String clientID = "datalake-builder-";
     private final Connection connection;
     private final Session session;
     private final String topicWeather = "prediction.Weather";
@@ -40,6 +40,7 @@ public class AMQDataLakeSubscriber implements Subscriber {
     }
     private void handleMessage(Message message, Listener listener, String topicName){
         try {
+            System.out.println("Handling message from " + topicName);
             listener.consume(((TextMessage) message).getText(), topicName);
             System.out.println(message);
         } catch (JMSException e) {

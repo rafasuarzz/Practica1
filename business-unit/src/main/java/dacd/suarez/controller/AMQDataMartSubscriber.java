@@ -44,6 +44,15 @@ public class AMQDataMartSubscriber implements Subscriber {
             throw new RuntimeException(e);
         }
     }
+    public void close() {
+        try {
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (JMSException e) {
+            throw new RuntimeException("Error closing JMS connection", e);
+        }
+    }
 
 }
 

@@ -1,4 +1,4 @@
-package dacd.suarez.controller;
+package dacd.suarez.model;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -18,7 +18,7 @@ public class BusinessUnit {
     private static List<WeatherData> weatherDataList = new ArrayList<>();
     private static List<Booking> bookingDataList = new ArrayList<>();
 
-    public static void processDatamart(String filePath) {
+    public static List<WeatherData> processWeatherDatamart(String filePath) {
         Gson gson = new Gson();
         JsonParser jsonParser = new JsonParser();
 
@@ -32,18 +32,36 @@ public class BusinessUnit {
                     // Es un objeto de datos meteorológicos
                     WeatherData weatherData = gson.fromJson(json, WeatherData.class);
                     weatherDataList.add(weatherData);
-                    System.out.println(weatherData.getTemperature());
-                } else if (json.has("hotel")) {
-                    // Es un objeto de datos del hotel
+                }
+            }return weatherDataList;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public static List<Booking> processHotelDatamart(String filePath){
+        Gson gson = new Gson();
+        JsonParser jsonParser = new JsonParser();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                    // Parsea cada línea como un objeto JSON
+                JsonObject json = jsonParser.parse(line).getAsJsonObject();
+
+                if (json.has("hotel")) {
+                        // Es un objeto de datos del hotel
                     Booking bookingData = gson.fromJson(json, Booking.class);
                     bookingDataList.add(bookingData);
                     System.out.println(bookingData.getRates());
                 }
-            }
+            }return bookingDataList;
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
     }
+
     public static List<WeatherData> filterWeatherDataByLocation(List<WeatherData> weatherDataList, Location location) {
         List<WeatherData> locationWeatherData = new ArrayList<>();
 

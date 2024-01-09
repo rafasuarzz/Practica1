@@ -60,13 +60,13 @@ public class FileDataMartBuilder implements Listener {
         }
     }
 
-    private void cleanOldEvents(String dataMartPath, String formattedDate) {
+    private void cleanOldEvents(String dataMartPath, String currentFolder) {
         File baseDirectory = new File(dataMartPath);
         File[] subdirectories = baseDirectory.listFiles(File::isDirectory);
 
         if (subdirectories != null){
             for (File subdirectory: subdirectories){
-                if (!subdirectory.getName().equals(formattedDate)){
+                if (!subdirectory.getName().equals(currentFolder)){
                     deleteDirectory(subdirectory);
                 }
             }
