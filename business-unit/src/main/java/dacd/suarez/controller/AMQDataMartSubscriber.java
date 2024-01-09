@@ -1,4 +1,4 @@
-package dacd.suarez;
+package dacd.suarez.controller;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 

@@ -1,4 +1,4 @@
-package dacd.suarez;
+package dacd.suarez.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -16,10 +16,6 @@ public class FileDataMartBuilder implements Listener {
 
     private final String dataMartPath = "datamart" + File.separator + "eventstore";
     private final String fileName = "all_events";
-
-    public String getDataMartPath() {
-        return dataMartPath;
-    }
 
     @Override
     public void consume(String message, String topicName) {

@@ -13,8 +13,9 @@ import java.time.format.DateTimeFormatter;
 public class OpenHotelProvider implements HotelProvider{
     @Override
     public Booking getHotel(Hotel hotel, Booking booking){
+
         Instant now = Instant.now().plusSeconds(24 * 60 * 60);
-        Instant endDate = now.plusSeconds(3 * 24 * 60 * 60);
+        Instant endDate = now.plusSeconds(5 * 24 * 60 * 60);
 
         String apiUrl = "https://data.xotelo.com/api/rates?hotel_key=" + hotel.getHotel_key() +
                 "&chk_in=" + DateTimeFormatter.ofPattern("yyyyMMdd").format(now.atZone(ZoneOffset.UTC)) +
@@ -24,10 +25,17 @@ public class OpenHotelProvider implements HotelProvider{
             JsonObject result = JsonParser.parseString(Jsoup.connect(apiUrl).ignoreContentType(true).execute().body()).getAsJsonObject();
             booking.setCheck_in(result.getAsJsonObject("result").get("chk_in").getAsString());
             booking.setCheck_out(result.getAsJsonObject("result").get("chk_out").getAsString());
-            booking.setRates(result.getAsJsonObject("result").getAsJsonArray("rates"));
-            hotel.setLocation(hotel.getLocation());
-            hotel.setHotel_name(hotel.getHotel_name());
-            return booking;
+
+            JsonArray ratesArray = result.getAsJsonObject("result").getAsJsonArray("rates");
+
+            if (ratesArray != null && ratesArray.size() > 0) {
+                booking.setRates(ratesArray);
+                hotel.setLocation(hotel.getLocation());
+                hotel.setHotel_name(hotel.getHotel_name());
+                return booking;
+            } else {
+                return null;
+            }
         } catch (IOException e) {
             e.printStackTrace();
             return null;
