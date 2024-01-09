@@ -59,7 +59,7 @@ public class UserInterface {
         }
 
 
-        System.out.print("\nSeleccione la ciudad que desea visitar(ingrese el número): ");
+        System.out.print("\nSeleccione la isla que desea visitar(ingrese el número): ");
         int selectedIslandIndex = scanner.nextInt();
 
 
@@ -78,7 +78,7 @@ public class UserInterface {
 
                 System.out.println("\nHoteles en " + selectedIsland + " Ordenados por Tarifa:");
                 for (Booking hotel : hotelesOrdenadosPorTarifa) {
-                    System.out.println("Hotel: " + hotel.getHotel().getHotel_name() + " - Tarifa: " + BusinessUnit.getMinRateFromBooking(hotel));
+                    System.out.println("Hotel: " + hotel.getHotel().getHotel_name() + " - Tarifa: " + BusinessUnit.getMinRateFromBooking(hotel) + "€");
                 }
             }
         }
@@ -99,7 +99,7 @@ public class UserInterface {
             String island = entry.getKey();
             List<WeatherData> islandData = entry.getValue();
 
-            System.out.println("\nDatos Climáticos para la Ciudad de " + island + ":");
+            System.out.println("\nDatos Climáticos para la isla de " + island + ":");
 
             for (WeatherData data : islandData) {
                 System.out.println("Fecha: " + convertEpochToDateTime(data.getPredictionTime()));
@@ -107,16 +107,16 @@ public class UserInterface {
                 for (String condition : selectedConditions) {
                     switch (condition.trim().toLowerCase()) {
                         case "temperatura":
-                            System.out.println("   Temperatura: " + data.getTemperature());
+                            System.out.println("   Temperatura: " + data.getTemperature() + "º");
                             break;
                         case "lluvia":
-                            System.out.println("   Lluvia: " + data.getRainProbability());
+                            System.out.println("   Lluvia: " + data.getRainProbability()+ " %");
                             break;
                         case "nubes":
                             System.out.println("   Nubes: " + data.getClouds());
                             break;
                         case "viento":
-                            System.out.println("   Viento: " + data.getWindSpeed());
+                            System.out.println("   Viento: " + data.getWindSpeed() + " km/h");
                             break;
                         case "humedad":
                             System.out.println("   Humedad: " + data.getHumidity());
