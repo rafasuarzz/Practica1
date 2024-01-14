@@ -79,7 +79,7 @@ public class UserInterface {
 
             List<Booking> bookingDataList;
 
-            if (subdirectories == null) {
+            if (subdirectories != null) {
                 bookingDataList = BusinessUnit.processHotelInfo(fileName.get(1));
             }else {
                 bookingDataList = BusinessUnit.processHotelInfo(fileName.get(0));
