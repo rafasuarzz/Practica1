@@ -11,7 +11,7 @@
 - This project involves creating a smart travel planning application for the Canary Islands. It integrates weather data from previous projects with new event data to showcase the best hotels with the most competitive rates for a 5-night stay in the selected location. The project comprises four main modules. The first module (prediction-provider) fetches weather data from the OpenWeatherMap API and sends it to a message broker using Java Message Service (JMS). The hotel-price-provider retrieves hotel data from the Xotelo API and sends it to a message broker via JMS. Subsequently, the datalake-builder module subscribes to the durable broker, processes incoming messages, and stores them in a datalake. Finally, the canary-insights-business-unit module subscribes to the durable broker, processes messages, and stores them in a datamart. Additionally, this module facilitates client interaction through a Command Line Interface (CLI).
 
 **How to use it:**
-   - In the businessUnit and the datatalake-builder you will have to pass your broker url as an argument and in the prediction-provider your apikey.
+   - In the businessUnit and the datatalake-builder you will have to pass your broker url and the root directory to store your datalake as an argument and in the prediction-provider your apikey.
    - After running both providers you can run the hotel-recommendation-business-unit and you will have to follow the steps shown in your console to reach to a list of the hotels shown in ascendant price.
 
 
