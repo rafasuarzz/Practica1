@@ -24,7 +24,6 @@ public class BusinessUnit {
     private static List<Booking> bookingDataList = new ArrayList<>();
 
     public static List<WeatherData> processWeatherInfo(String filePath) {
-        System.out.println(filePath);
         Gson gson = new Gson();
         JsonParser jsonParser = new JsonParser();
 

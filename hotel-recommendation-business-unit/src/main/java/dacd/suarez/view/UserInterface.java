@@ -47,13 +47,12 @@ public class UserInterface {
 
         List<String> fileName = BusinessUnit.generateFileName(dataLakePath);
         File baseDirectory = new File(fileName.get(0));
-        File[] subdirectories = baseDirectory.listFiles(File::isDirectory);
         List<WeatherData> weatherDataList;
 
-        if (subdirectories != null) {
-             weatherDataList = BusinessUnit.processWeatherInfo(fileName.get(2));
-        }else {
+        if (baseDirectory.exists()) {
             weatherDataList = BusinessUnit.processWeatherInfo(fileName.get(0));
+        }else {
+            weatherDataList = BusinessUnit.processWeatherInfo(fileName.get(2));
         }
 
 
@@ -79,10 +78,10 @@ public class UserInterface {
 
             List<Booking> bookingDataList;
 
-            if (subdirectories == null) {
-                bookingDataList = BusinessUnit.processHotelInfo(fileName.get(1));
-            }else {
+            if (baseDirectory.exists()) {
                 bookingDataList = BusinessUnit.processHotelInfo(fileName.get(0));
+            }else {
+                bookingDataList = BusinessUnit.processHotelInfo(fileName.get(1));
             }
 
 
