@@ -9,10 +9,12 @@ import java.util.concurrent.TimeUnit;
 
 public class Main {
     public static void main(String[] args) throws JMSException {
+
+        AMQDataMartSubscriber subscriberAMQ = null;
+        FileDataMartBuilder fileDataMartBuilder = new FileDataMartBuilder();
+        UserInterface userInterface = new UserInterface();
         try{
-            AMQDataMartSubscriber subscriberAMQ = new AMQDataMartSubscriber(args[0]);
-            FileDataMartBuilder fileDataMartBuilder = new FileDataMartBuilder();
-            UserInterface userInterface = new UserInterface();
+            subscriberAMQ = new AMQDataMartSubscriber(args[0]);
 
             CountDownLatch latch = new CountDownLatch(1);
 
@@ -25,7 +27,7 @@ public class Main {
             };
             subscriberAMQ.start(listener);
 
-            if (!latch.await(10, TimeUnit.SECONDS)) {
+            if (!latch.await(15, TimeUnit.SECONDS)) {
                 System.out.println("\n");
                 System.out.println("No messages were received within the specified time. Accessing the command line..");
                 System.out.println("\n");
@@ -37,7 +39,7 @@ public class Main {
 
             System.out.println("\n");
 
-            userInterface.chooseConditions();
+            userInterface.chooseConditions(args[1]);
 
         } catch (JMSException | InterruptedException e) {
             e.printStackTrace();

@@ -11,7 +11,7 @@ public class AMQDataMartSubscriber implements Subscriber {
     private final Session session;
     private final String topicWeather = "prediction.Weather";
     private final String topicHotel = "hotel.booking";
-    private final static String clientID = "datalake-builder";
+    private final static String clientID = "datamart-builder";
 
 
     public AMQDataMartSubscriber(String BROKER_URL) throws JMSException{

@@ -34,13 +34,14 @@ public class FileDataMartBuilder implements Listener {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
             String formattedDate = dateTime.format(formatter);
 
-            String directoryPath = dataMartPath + File.separator + formattedDate;
-            createDirectory(directoryPath);
 
             if (!dataMartEmpty) {
                 clearDataMart();
                 dataMartEmpty = true;
             }
+
+            String directoryPath = dataMartPath + File.separator + formattedDate;
+            createDirectory(directoryPath);
 
             String filePath = directoryPath + File.separator + fileName + ".events";
             writeMessage(filePath, message);

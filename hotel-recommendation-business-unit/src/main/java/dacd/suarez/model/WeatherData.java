@@ -30,21 +30,16 @@ public class WeatherData {
         return windSpeed;
     }
 
-
     public double getRainProbability() {
         return rainProbability;
     }
-
 
     public long getPredictionTime() {
         return predictionTime;
     }
 
-
     public Location getLocation() {
         return location;
     }
-
-
 
 }

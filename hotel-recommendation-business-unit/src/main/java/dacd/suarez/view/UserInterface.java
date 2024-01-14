@@ -1,13 +1,14 @@
 package dacd.suarez.view;
 
 import dacd.suarez.model.Booking;
-import dacd.suarez.model.BusinessUnit;
+import dacd.suarez.controller.BusinessUnit;
 import dacd.suarez.model.WeatherData;
 
 
+import java.io.File;
 import java.util.*;
 
-import static dacd.suarez.model.BusinessUnit.convertEpochToDateTime;
+import static dacd.suarez.controller.BusinessUnit.convertEpochToDateTime;
 
 
 public class UserInterface {
@@ -20,7 +21,7 @@ public class UserInterface {
 
 
 
-    public void chooseConditions() {
+    public void chooseConditions(String dataLakePath) {
         List<String> weatherConditions = getAvailableWeatherConditions();
 
 
@@ -44,8 +45,18 @@ public class UserInterface {
             System.out.println("- " + condition.trim());
         }
 
-        String fileName = BusinessUnit.generateDataMartFileName();
-        List<WeatherData> weatherDataList = BusinessUnit.processWeatherDatamart(fileName);
+        List<String> fileName = BusinessUnit.generateFileName(dataLakePath);
+        File baseDirectory = new File(fileName.get(0));
+        File[] subdirectories = baseDirectory.listFiles(File::isDirectory);
+        List<WeatherData> weatherDataList;
+
+        if (subdirectories != null) {
+             weatherDataList = BusinessUnit.processWeatherInfo(fileName.get(2));
+        }else {
+            weatherDataList = BusinessUnit.processWeatherInfo(fileName.get(0));
+        }
+
+
         Map<String, List<WeatherData>> islandWeatherData = BusinessUnit.getWeatherData(selectedConditions, weatherDataList);
 
         displayWeatherData(islandWeatherData, selectedConditions);
@@ -66,8 +77,14 @@ public class UserInterface {
         if (selectedIslandIndex >= 1 && selectedIslandIndex <= allIslands.size()) {
             String selectedIsland = allIslands.get(selectedIslandIndex - 1);
 
+            List<Booking> bookingDataList;
 
-            List<Booking> bookingDataList = BusinessUnit.processHotelDatamart(fileName);
+            if (subdirectories == null) {
+                bookingDataList = BusinessUnit.processHotelInfo(fileName.get(1));
+            }else {
+                bookingDataList = BusinessUnit.processHotelInfo(fileName.get(0));
+            }
+
 
             if (bookingDataList.isEmpty()) {
                 System.out.println("No hay hoteles disponibles para la isla seleccionada.");

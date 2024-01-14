@@ -1,8 +1,11 @@
-package dacd.suarez.model;
+package dacd.suarez.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import dacd.suarez.model.Booking;
+import dacd.suarez.model.Rate;
+import dacd.suarez.model.WeatherData;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -20,7 +23,8 @@ public class BusinessUnit {
     private static List<WeatherData> weatherDataList = new ArrayList<>();
     private static List<Booking> bookingDataList = new ArrayList<>();
 
-    public static List<WeatherData> processWeatherDatamart(String filePath) {
+    public static List<WeatherData> processWeatherInfo(String filePath) {
+        System.out.println(filePath);
         Gson gson = new Gson();
         JsonParser jsonParser = new JsonParser();
 
@@ -43,8 +47,7 @@ public class BusinessUnit {
         }
     }
 
-    public static List<Booking> processHotelDatamart(String filePath) {
-        List<Booking> bookingDataList = new ArrayList<>();
+    public static List<Booking> processHotelInfo(String filePath) {
         Gson gson = new Gson();
         JsonParser jsonParser = new JsonParser();
 
@@ -65,11 +68,20 @@ public class BusinessUnit {
         }
     }
 
-    public static String generateDataMartFileName() {
+    public static List<String> generateFileName(String datalakePath) {
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        return "datamart" + File.separator + "eventstore" + File.separator + currentDate.format(formatter)
+        String dataMartPath = "datamart" + File.separator + "eventstore" + File.separator + currentDate.format(formatter)
                 + File.separator + "all_events.events";
+        String dataLakeHotelPath = datalakePath + File.separator + "datalake" + File.separator + "eventstore" +
+                File.separator + "hotel.booking" + File.separator + "hotel-price-provider" + File.separator
+                + currentDate.format(formatter) + ".events";
+        String dataLakeWeatherPath = datalakePath + File.separator + "datalake" + File.separator + "eventstore" +
+                File.separator + "prediction.Weather" + File.separator + "prediction-provider" + File.separator
+                + currentDate.format(formatter) + ".events";
+         List<String> listOfPaths = List.of(dataMartPath, dataLakeHotelPath, dataLakeWeatherPath);
+
+        return listOfPaths;
     }
 
     public static Map<String, List<WeatherData>> getWeatherData(List<String> selectedConditions, List<WeatherData> weatherDataList) {
